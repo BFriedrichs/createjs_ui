@@ -11,6 +11,7 @@
      * @constructor
      */
     var Application = function (stage, mobile) {
+        console.log('a');
         createjs.Container.call(this);
         this._stage = stage;
         this.mobile = !!mobile; // we assume desktop browser as default
@@ -47,10 +48,12 @@
             // enable mouse wheel support for the stage
             // (will be ignored outside the canvas)
             createjs_ui.mouseWheelSupport(this._stage);
+            console.log("enabled wheel support")
         }
-
         // listen to resize event
         createjs_ui.resizeSupport(this._stage);
+
+        console.log("init done")
     };
 
     /**

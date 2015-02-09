@@ -76,6 +76,7 @@ this.createjs_ui = this.createjs_ui || {};
     };
 
     p.handleWheel = function (event) {
+        console.log('a');
         if(event.delta) {
             var x = this.thumb.x - event.delta * this.scrolldelta;
             var y = this.thumb.y - event.delta * this.scrolldelta;
@@ -114,6 +115,9 @@ this.createjs_ui = this.createjs_ui || {};
 
     p._set_width = function(width) {
         this._width = width;
+        if(this.thumb) {
+            this.thumb.invalidTrack = true;
+        }
         this.invalidTrack = true;
     };
 
@@ -123,6 +127,9 @@ this.createjs_ui = this.createjs_ui || {};
 
     p._set_height = function(height) {
         this._height = height;
+        if(this.thumb) {
+            this.thumb.invalidTrack = true;
+        }
         this.invalidTrack = true;
     };
 
