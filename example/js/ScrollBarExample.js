@@ -19,7 +19,7 @@ var ScrollBarExample;
         inner_horizontal.layout.gap = 10;
         
         // add some buttons
-        for (var i = 0; i < 100; i++) {
+        for (var i = 0; i < 10; i++) {
             btn = new createjs_ui.Button();
             btn.height = 25;
             btn.label = (i+1)+". button";
@@ -34,7 +34,6 @@ var ScrollBarExample;
         this.addChild(sb_horizontal);
         sb_horizontal.y = inner_scroll_horizontal.height;
         sb_horizontal.width = inner_scroll_horizontal.width;
-
 
 
         /*

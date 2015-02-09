@@ -76,10 +76,13 @@ this.createjs_ui = this.createjs_ui || {};
     };
 
     p.handleWheel = function (event) {
-        var x = this.thumb.x - event.delta * this.scrolldelta;
-        var y = this.thumb.y - event.delta * this.scrolldelta;
-        if (this.moveThumb(x, y)) {
-            this.scrollContent(x, y);
+        if(event.delta) {
+            var x = this.thumb.x - event.delta * this.scrolldelta;
+            var y = this.thumb.y - event.delta * this.scrolldelta;
+
+            if (this.moveThumb(x, y)) {
+                this.scrollContent(x, y);
+            }
         }
     };
 
@@ -138,6 +141,12 @@ this.createjs_ui = this.createjs_ui || {};
             this.addChildAt(this.skin, 0);
         }
 
+        if (this.orientation == ScrollBar.HORIZONTAL) {
+            this.skin.width = this.width;
+        } else {
+            this.skin.height = this.height;
+        }
+
         this.invalidTrack = false;
     };
 
@@ -152,11 +161,7 @@ this.createjs_ui = this.createjs_ui || {};
                     this.thumb.height = Math.max(50, this.scrollArea.height / (this.scrollArea.content.height / this.scrollArea.height));
                 }
             }
-            if (this.orientation == ScrollBar.HORIZONTAL) {
-                this.skin.width = this.width;
-            } else {
-                this.skin.height = this.height;
-            }
+
 
             this.invalidTrack = false;
         }
