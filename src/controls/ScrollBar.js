@@ -26,7 +26,7 @@ this.createjs_ui = this.createjs_ui || {};
         this.thumb.on('pressmove', this.handleMove, this);
         this.thumb.on('mousedown', this.handleMouseDown, this);
         this.on("mousewheel", this.handleWheel, this);
-        this.on('mousedown', this.handleMouseOnBarDown, this);
+        this.on('pressmove', this.handleMouseOnBarDown, this);
 
 
         this.invalidTrack = true;
