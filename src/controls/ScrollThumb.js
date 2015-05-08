@@ -27,9 +27,11 @@ this.createjs_ui = this.createjs_ui || {};
             this.skin = skin;
             this.addChild(skin);
         }
+        if(skin.getBounds() ) {
+            this.skin.x = (this.width - skin.getBounds().width )/ 2;
+            this.skin.y = (this.height - skin.getBounds().height )/ 2;
+        }
 
-        this.skin.x = (this.width - skin.getBounds().width )/ 2;
-        this.skin.y = (this.height - skin.getBounds().height )/ 2;
 
         this.invalidTrack = false;
     };

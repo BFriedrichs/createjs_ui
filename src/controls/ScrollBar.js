@@ -26,6 +26,8 @@ this.createjs_ui = this.createjs_ui || {};
         this.thumb.on('pressmove', this.handleMove, this);
         this.thumb.on('mousedown', this.handleMouseDown, this);
         this.on("mousewheel", this.handleWheel, this);
+        this.on('mousedown', this.handleMouseOnBarDown, this);
+
 
         this.invalidTrack = true;
         this.start = [0, 0];
@@ -43,6 +45,25 @@ this.createjs_ui = this.createjs_ui || {};
     ScrollBar.VERTICAL = "vertical";
 
     var p = createjs.extend(ScrollBar, createjs_ui.Control);
+
+
+    p.handleMouseOnBarDown = function(e) {
+        if(this.thumb != e.target) {
+            var x = e.localX;
+            var y = e.localY;
+            if (this.moveThumb(x, y)) {
+                // do not override localX/localY in start
+                // if we do not move the thumb
+                this.scrollContent(x, y);
+                this.start[0] = e.localX;
+                this.start[1] = e.localY;
+            }
+        }
+
+        /*if () {
+            this.start = [e.x, e.y];
+        }*/
+    };
 
     p.handleMove = function(e) {
         var x = this.thumb.x + e.localX - this.start[0];
@@ -76,7 +97,6 @@ this.createjs_ui = this.createjs_ui || {};
     };
 
     p.handleWheel = function (event) {
-        console.log('a');
         if(event.delta) {
             var x = this.thumb.x - event.delta * this.scrolldelta;
             var y = this.thumb.y - event.delta * this.scrolldelta;
@@ -150,8 +170,16 @@ this.createjs_ui = this.createjs_ui || {};
 
         if (this.orientation == ScrollBar.HORIZONTAL) {
             this.skin.width = this.width;
+            var center = (this.height - this.thumb.height)/ 2;
+            if(center > 0) {
+                this.thumb.y = center;
+            }
         } else {
             this.skin.height = this.height;
+            var center = (this.width - this.thumb.width)/ 2;
+            if(center > 0) {
+                this.thumb.x = center;
+            }
         }
 
         this.invalidTrack = false;
@@ -160,7 +188,7 @@ this.createjs_ui = this.createjs_ui || {};
     p.redraw = function() {
         if (this.invalidTrack && this.thumb) {
             this.fromSkin(this.orientation+"_track", this.showTrack);
-            this.thumb.width = 20;
+            this.thumb.width = this.thumb.width || 20;
             if (this.scrollArea) {
                 if (this.orientation == ScrollBar.HORIZONTAL) {
                     this.thumb.width = Math.max(100, this.scrollArea.width / (this.scrollArea.content.width / this.scrollArea.width));
